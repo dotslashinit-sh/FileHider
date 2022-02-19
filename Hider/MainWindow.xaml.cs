@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 using System.Windows;
+using System.Threading.Tasks;
 
 namespace Hider
 {
@@ -13,12 +14,21 @@ namespace Hider
         // Input file extension
         string inputFileExt;
 
+        // Paths of all the files and directories. The values for these are extracted from the textboxes.
+        String inputFilePath;
+        String inputDirPath;
+        String outputFilePath;
+
         /// <summary>
         /// Constructor
         /// </summary>
         public MainWindow()
         {
             inputFileExt = "";
+
+            inputFilePath = "";
+            inputDirPath = "";
+            outputFilePath = "";
         }
 
         private void OnQuitApp(object sender, RoutedEventArgs e)
@@ -29,12 +39,12 @@ namespace Hider
         /// <summary>
         /// Even function to hide the files.
         /// </summary>
-        private void OnHideFiles(object sender, RoutedEventArgs e)
+        private async void OnHideFiles(object sender, RoutedEventArgs e)
         {
             // Get the path values from the input boxes.
-            String inputFilePath = inputFileBox.Text.Trim();
-            String inputDirPath = inputDirBox.Text.Trim();
-            String outputFilePath = outputFileBox.Text.Trim();
+            inputFilePath = inputFileBox.Text.Trim();
+            inputDirPath = inputDirBox.Text.Trim();
+            outputFilePath = outputFileBox.Text.Trim();
 
             // Remove the temporary file if it exists.
             if (File.Exists("./temp.zip"))
@@ -42,26 +52,16 @@ namespace Hider
                 File.Delete("./temp.zip");
             }
 
-            byte[] inputFileBuffer;
-            if (File.Exists(inputFilePath))
-            {
-                inputFileBuffer = File.ReadAllBytes(inputFilePath);
-            }
-            else
+            if (!File.Exists(inputFilePath))
             {
                 ShowError("Cannot open input file to read!");
                 return;
             }
 
-            FileStream outputFile;
-            if(File.Exists(outputFilePath))
+            if (File.Exists(outputFilePath))
             {
                 ShowError("Please select a different output file!");
                 return;
-            }
-            else
-            {
-                outputFile = File.Create(outputFilePath);
             }
 
             if (!Directory.Exists(inputDirPath))
@@ -70,16 +70,33 @@ namespace Hider
                 return;
             }
 
+            // Disable the buttons until the opeartion is completed.
+            hideButton.IsEnabled = false;
+            quitButton.IsEnabled = false;
+
+            // Do the file operations in the background.
+            await Task.Run(ProcessFileOp);
+
+            // Enable the buttons and then print the confirmation box.
+            hideButton.IsEnabled = true;
+            quitButton.IsEnabled = true;
+            ShowInformation("The file was saved successfully! You can open the output file" +
+                "with an archive manager(WinRAR, WinZIP, 7-Zip etc.) to view the files that were hidden.");
+        }
+
+        /// <summary>
+        /// Processes the files and generates and writes to the output file.
+        /// </summary>
+        private void ProcessFileOp()
+        {
             ZipFile.CreateFromDirectory(inputDirPath, "./temp.zip");
             byte[] zipBuffer = File.ReadAllBytes("./temp.zip");
-            byte[] buffer = new byte[zipBuffer.Length+inputFileBuffer.Length];
+            byte[] inputFileBuffer = File.ReadAllBytes(inputFilePath);
+            File.Delete("./temp.zip"); // Delete temporary file after reading.
+            byte[] buffer = new byte[zipBuffer.Length + inputFileBuffer.Length];
             inputFileBuffer.CopyTo(buffer, 0);
             zipBuffer.CopyTo(buffer, inputFileBuffer.Length);
-            outputFile.Write(buffer);
-            outputFile.Close();
-            File.Delete("./temp.zip");
-
-            ShowInformation("The file has been saved successfully! Open the output file using an archive manager(WinRAR, 7-Zip, WinZIP etc.) to view the hidden files!");
+            File.WriteAllBytes(outputFilePath, buffer);
         }
 
         /// <summary>
