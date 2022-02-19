@@ -1,0 +1,15 @@
+# Build files
+Hider/bin/*
+Hider/obj/*
+
+# User-options files
+*.user
+
+# Extra build files
+*.exe
+*.obj
+*.pdb
+*.nupkg
+
+# IDE files
+.vs/*
