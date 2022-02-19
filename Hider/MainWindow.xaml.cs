@@ -10,8 +10,12 @@ namespace Hider
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Input file extension
         string inputFileExt;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainWindow()
         {
             inputFileExt = "";
@@ -22,6 +26,9 @@ namespace Hider
             Application.Current.Shutdown();
         }
 
+        /// <summary>
+        /// Even function to hide the files.
+        /// </summary>
         private void OnHideFiles(object sender, RoutedEventArgs e)
         {
             // Get the path values from the input boxes.
@@ -75,16 +82,25 @@ namespace Hider
             ShowInformation("The file has been saved successfully! Open the output file using an archive manager(WinRAR, 7-Zip, WinZIP etc.) to view the hidden files!");
         }
 
+        /// <summary>
+        /// Displays the given error message in an error box.
+        /// </summary>
         private void ShowError(string errMsg)
         {
             MessageBox.Show(errMsg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        /// <summary>
+        /// Displays the given message in an info box.
+        /// </summary>
         private void ShowInformation(string msg)
         {
             MessageBox.Show(msg, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        /// <summary>
+        /// Browses for the input file and changes the value of the textbox.
+        /// </summary>
         private void OnBrowseInputFile(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog dialog = new();
@@ -95,6 +111,9 @@ namespace Hider
             inputFileExt = Path.GetExtension(inputFileBox.Text); // Get the extension of the input file.
         }
 
+        /// <summary>
+        /// Browses for the input directory containing the files to hide and changes the value of the textbox.
+        /// </summary>
         private void OnBrowseInputDir(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.FolderBrowserDialog dialog = new();
@@ -103,11 +122,14 @@ namespace Hider
             inputDirBox.Text = dialog.SelectedPath;
         }
 
+        /// <summary>
+        /// Browses for the output file and changes the value of the textbox.
+        /// </summary>
         private void OnBrowseOutputFile(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.SaveFileDialog dialog = new();
             dialog.Title = "Please select an output file";
-            dialog.Filter = $"Input file type (*{inputFileExt})|*{inputFileExt}"; // Remove the . from the input file extension and set is as filter.
+            dialog.Filter = $"Input file type (*{inputFileExt})|*{inputFileExt}";
             dialog.ShowDialog();
             outputFileBox.Text = dialog.FileName;
         }
