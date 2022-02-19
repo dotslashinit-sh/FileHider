@@ -17,3 +17,6 @@ Open the output file with a zip archive application like WinRAR, WinZIP or 7-Zip
 
 ## License
 [MIT License](./LICENSE.md)
+
+## Requirements
+You will need .NET 6.0 to run this. You can download it from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.2-windows-x64-installer).
