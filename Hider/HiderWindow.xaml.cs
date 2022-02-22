@@ -2,8 +2,8 @@
 using System.IO;
 using System.IO.Compression;
 using System.Windows;
-using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace Hider
 {
@@ -23,6 +23,13 @@ namespace Hider
             outputFile = "";
             inputFile = "";
         }
+
+        private void ShowError(string message, string caption = "Error")
+        {
+            MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        // Actions.
 
         private void OnInputBoxTxtChngd(object sender, TextChangedEventArgs e)
         {
@@ -68,18 +75,25 @@ namespace Hider
                 filesListBox.Items.Remove(selectedItem);
             }
         }
+
         private async void OnHideFilesBtnClick(object sender, RoutedEventArgs e)
         {
             // Check if the input file is set and it exists.
             if(inputFileBox.Text == "")
             {
-                MessageBox.Show("Error! Please select a base file!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ShowError("Error! Please select a base file!");
                 return;
             }
             if (!File.Exists(inputFileBox.Text))
             {
-                MessageBox.Show($"Error! File at \"{inputFileBox.Text}\" does not exist! Please select a base file that exists!",
-                    "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ShowError($"Error! File at \"{inputFileBox.Text}\" does not exist, or it is not a file! Please select a base file that exists!");
+                return;
+            }
+
+            // Check if atleast one item has been added to the list.
+            if(filesListBox.Items.Count == 0)
+            {
+                ShowError("Please add atleast one item!");
                 return;
             }
 
@@ -88,14 +102,17 @@ namespace Hider
             dialog.DefaultExt = inputFileExt;
             dialog.Title = "Save location";
             dialog.OverwritePrompt = true;
-            dialog.AddExtension = true;
             dialog.Filter = $"Input file type(*{inputFileExt})|{inputFileExt}";
-            System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.Cancel)
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
             {
                 return;
             }
             outputFile = dialog.FileName;
+            if (inputFile == outputFile)
+            {
+                ShowError("Input and output files cannot be the same!");
+                return;
+            }
             if (File.Exists(outputFile))
             {
                 File.Delete(outputFile);
