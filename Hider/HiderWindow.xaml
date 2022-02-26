@@ -40,13 +40,18 @@
                     HorizontalAlignment="Left"
                     Click="OnAddFilesBtnClick"
                     >Add files</Button>
+            <Button x:Name="addFromDirBtn"
+                    Width="100" Margin="86, 2, 2, 2"
+                    HorizontalAlignment="Left"
+                    Click="OnAddFromDirBtnClick"
+                    >Add from Folder</Button>
             <Button x:Name="removeBtn"
-                    Width="80" Margin="86, 2, 2, 2"
+                    Width="80" Margin="192, 2, 2, 2"
                     HorizontalAlignment="Left"
                     Click="OnRemoveBtnClick"
                     >Remove Item</Button>
             <Button x:Name="removeAllBtn"
-                    Width="80" Margin="172, 2, 2, 2"
+                    Width="80" Margin="278, 2, 2, 2"
                     HorizontalAlignment="Left"
                     Click="OnRemoveAllBtnClick"
                     >Remove All</Button>

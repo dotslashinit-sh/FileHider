@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Windows;
 using System.Windows.Controls;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace Hider
 {
@@ -21,11 +22,17 @@ namespace Hider
         // Input file location.
         string inputFile;
 
+        // List of files and entry names to be hidden.
+        // The entries are stored in tuples as (string, string) with Item1 being the full location of the file,
+        // and Item2 being the entry name, with relative path to the file.
+        ArrayList filesList;
+
         public HiderWindow()
         {
             inputFileExt = "";
             outputFile = "";
             inputFile = "";
+            filesList = new();
         }
 
         /// <summary>
@@ -81,8 +88,45 @@ namespace Hider
                 if (file != null && !filesListBox.Items.Contains(file))
                 {
                     filesListBox.Items.Add(file);
+                    filesList.Add((file, ""));
                 }
             }
+        }
+
+        /// <summary>
+        /// Event for when the 'Add from Folder' button is clicked.
+        /// </summary>
+        private void OnAddFromDirBtnClick(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog dialog = new();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
+            string dir = dialog.SelectedPath;
+            ArrayList entries = GetFilesInDir(dir, dir);
+            filesList.AddRange(entries);
+            foreach((string, string) entry in entries)
+            {
+                filesListBox.Items.Add(entry.Item1);
+            }
+        }
+
+        /// <summary>
+        /// Returns an array of files and their relative path to the current directory.
+        /// </summary>
+        /// <param name="path"> The folder where all the files exist. </param>
+        /// <param name="currentDir"> The current directory. Default value is "". </param>
+        /// <returns></returns>
+        private ArrayList GetFilesInDir(string path, string currentDir = "")
+        {
+            ArrayList entries = new();
+            foreach(string entry in Directory.GetFiles(path))
+            {
+                entries.Add((entry, Path.GetRelativePath(currentDir, entry)));
+            }
+            foreach (string dir in Directory.GetDirectories(path))
+            {
+                entries.AddRange(GetFilesInDir(dir, currentDir));
+            }
+            return entries;
         }
 
         /// <summary>
@@ -94,6 +138,14 @@ namespace Hider
             if(selectedItem != null)
             {
                 filesListBox.Items.Remove(selectedItem);
+                foreach((string, string) entry in filesList)
+                {
+                    if (entry.Item1 == (string)selectedItem)
+                    {
+                        filesList.Remove(entry);
+                        break;
+                    }
+                }
             }
         }
 
@@ -106,6 +158,7 @@ namespace Hider
             if(!files.IsEmpty)
             {
                 files.Clear();
+                filesList.Clear();
             }
         }
 
@@ -164,21 +217,13 @@ namespace Hider
         /// </summary>
         private void ProcessFiles()
         {
-            System.Collections.ArrayList filesList = new();
-            foreach (object? item in filesListBox.Items)
-            {
-                if (item != null)
-                {
-                    filesList.Add((String)item);
-                }
-            }
-
             // Create a temporary memory stream where the archive file is written.
             MemoryStream archiveStream = new(); 
             ZipArchive archive = new(archiveStream, ZipArchiveMode.Create);
-            foreach(string file in filesList)
+            foreach((string, string) entry in filesList)
             {
-                archive.CreateEntryFromFile(file, Path.GetFileName(file));
+                if(File.Exists(entry.Item1))
+                    archive.CreateEntryFromFile(entry.Item1, entry.Item2);
             }
             byte[] baseFileData = File.ReadAllBytes(inputFile);
             byte[] archiveData = archiveStream.ToArray();
