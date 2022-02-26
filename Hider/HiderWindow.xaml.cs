@@ -14,7 +14,11 @@ namespace Hider
     {
         // Input file extension
         string inputFileExt;
+
+        // Output file location
         string outputFile;
+
+        // Input file location.
         string inputFile;
 
         public HiderWindow()
@@ -24,6 +28,11 @@ namespace Hider
             inputFile = "";
         }
 
+        /// <summary>
+        /// Displayss the given message in an error box.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="caption">(Optional) The title of the error box. Default balue is "Error".</param>
         private void ShowError(string message, string caption = "Error")
         {
             MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -31,6 +40,9 @@ namespace Hider
 
         // Actions.
 
+        /// <summary>
+        /// Event for when the text in the base file input box has changed.
+        /// </summary>
         private void OnInputBoxTxtChngd(object sender, TextChangedEventArgs e)
         {
             inputFile = inputFileBox.Text;
@@ -40,6 +52,9 @@ namespace Hider
             }
         }
 
+        /// <summary>
+        /// Event for when the browse button is clicked.
+        /// </summary>
         private void OnBrowseBtnClick(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog dialog = new();
@@ -51,12 +66,15 @@ namespace Hider
             inputFileBox.Text = dialog.FileName;
         }
 
+        /// <summary>
+        /// Event for when the add files button is clicked.
+        /// </summary>
         private void OnAddFilesBtnClick(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog dialog = new();
             dialog.Multiselect = true;
             dialog.CheckFileExists = true;
-            dialog.ShowDialog();
+            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
             var files = dialog.FileNames;
             foreach (string? file in files)
             {
@@ -67,6 +85,9 @@ namespace Hider
             }
         }
 
+        /// <summary>
+        /// Event for when the remove button is clicked.
+        /// </summary>
         private void OnRemoveBtnClick(object sender, RoutedEventArgs e)
         {
             object? selectedItem = filesListBox.SelectedItem;
@@ -76,6 +97,21 @@ namespace Hider
             }
         }
 
+        /// <summary>
+        /// Event for when the Remove All button is clicked.
+        /// </summary>
+        private void OnRemoveAllBtnClick(object sender, RoutedEventArgs e)
+        {
+            var files = filesListBox.Items;
+            if(!files.IsEmpty)
+            {
+                files.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Event for when the hide files button is clicked.
+        /// </summary>
         private async void OnHideFilesBtnClick(object sender, RoutedEventArgs e)
         {
             // Check if the input file is set and it exists.
@@ -103,10 +139,7 @@ namespace Hider
             dialog.Title = "Save location";
             dialog.OverwritePrompt = true;
             dialog.Filter = $"Input file type(*{inputFileExt})|{inputFileExt}";
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
-            {
-                return;
-            }
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
             outputFile = dialog.FileName;
             if (inputFile == outputFile)
             {
@@ -118,6 +151,7 @@ namespace Hider
                 File.Delete(outputFile);
             }
 
+            // Update the hide files button to be blanked out until the task is completed.
             hFilesBtn.IsEnabled = false;
             await Task.Run(ProcessFiles);
             hFilesBtn.IsEnabled = true;
@@ -125,6 +159,9 @@ namespace Hider
                 "WinRAR or 7-Zip to view the files that were hidden!", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        /// <summary>
+        /// Process the files in the list, create an archive and then write to the output file.
+        /// </summary>
         private void ProcessFiles()
         {
             System.Collections.ArrayList filesList = new();

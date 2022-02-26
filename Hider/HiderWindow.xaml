@@ -41,10 +41,15 @@
                     Click="OnAddFilesBtnClick"
                     >Add files</Button>
             <Button x:Name="removeBtn"
-                    Width="80" Margin="86,2,2,2"
+                    Width="80" Margin="86, 2, 2, 2"
                     HorizontalAlignment="Left"
                     Click="OnRemoveBtnClick"
                     >Remove Item</Button>
+            <Button x:Name="removeAllBtn"
+                    Width="80" Margin="172, 2, 2, 2"
+                    HorizontalAlignment="Left"
+                    Click="OnRemoveAllBtnClick"
+                    >Remove All</Button>
 
             <Button x:Name="hFilesBtn"
                     Width="80" Margin="2"
