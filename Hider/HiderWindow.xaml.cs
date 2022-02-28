@@ -88,7 +88,7 @@ namespace Hider
                 if (file != null && !filesListBox.Items.Contains(file))
                 {
                     filesListBox.Items.Add(file);
-                    filesList.Add((file, ""));
+                    filesList.Add((file, Path.GetFileName(file)));
                 }
             }
         }
@@ -102,9 +102,27 @@ namespace Hider
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
             string dir = dialog.SelectedPath;
             ArrayList entries = GetFilesInDir(dir, dir);
-            filesList.AddRange(entries);
             foreach((string, string) entry in entries)
             {
+                // Remove already existing files and re-add them with new entry names.
+                if(filesListBox.Items.Contains(entry.Item1))
+                {
+                    filesListBox.Items.Remove(entry.Item1);
+
+                    // Iterate through the list, check each elements and remove the element with the same file path.
+                    for (int i = 0; i < filesList.Count; ++i)
+                    {
+                        object? fileEntryObj = filesList[i];
+                        if (fileEntryObj != null)
+                        {
+                            var filesListEntry = ((string, string))fileEntryObj;
+                            if(filesListEntry.Item1 == entry.Item1)
+                            {
+                                filesList.RemoveAt(i);
+                            }
+                        }
+                    }
+                }
                 filesListBox.Items.Add(entry.Item1);
             }
         }
