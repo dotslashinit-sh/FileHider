@@ -125,6 +125,7 @@ namespace Hider
                 }
                 filesListBox.Items.Add(entry.Item1);
             }
+            filesList.AddRange(entries);
         }
 
         /// <summary>
