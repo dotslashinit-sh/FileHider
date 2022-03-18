@@ -16,7 +16,6 @@ A simple application to hide files inside JPG, MP3 and MP4 files.
 Open the output file with a zip archive application like WinRAR, WinZIP or 7-Zip and then extract the files.
 
 ## Downloads
-The latest releases can be found [here](https://github.com/dotslashinit-sh/FileHider/releases).
-
+The latest releases can be found [here](https://github.com/dotslashinit-sh/FileHider/releases). Running these will require .NET 6.0 runtime which you can download from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.3-windows-x64-installer).
 ## License
 [MIT License](./LICENSE.md)
