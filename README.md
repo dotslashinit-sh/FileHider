@@ -17,5 +17,19 @@ Open the output file with a zip archive application like WinRAR, WinZIP or 7-Zip
 
 ## Downloads
 The latest releases can be found [here](https://github.com/dotslashinit-sh/FileHider/releases). Running these will require .NET 6.0 runtime which you can download from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.3-windows-x64-installer).
+
+## Compiling
+You can build the project using any one of these following methods.
+
+### Using .NET 6.0 SDK
+1) Download and install .NET 6.0 SDK from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.201-windows-x64-installer).
+2) Clone the repo and go to the root folder.
+3) Run `dotnet build`.
+
+### Using Visual Studio 2022
+1) Download and install Visual Studio Community Edition 2022 with the option "Desktop development with .NET" selected.
+2) Open FileHider.sln
+3) Build and run the project.
+
 ## License
 [MIT License](./LICENSE.md)
