@@ -45,8 +45,6 @@ namespace Hider
             MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        // Actions.
-
         /// <summary>
         /// Event for when the text in the base file input box has changed.
         /// </summary>
@@ -109,7 +107,6 @@ namespace Hider
                 {
                     filesListBox.Items.Remove(entry.Item1);
 
-                    // Iterate through the list, check each elements and remove the element with the same file path.
                     for (int i = 0; i < filesList.Count; ++i)
                     {
                         object? fileEntryObj = filesList[i];
@@ -236,7 +233,6 @@ namespace Hider
         /// </summary>
         private void ProcessFiles()
         {
-            // Create a temporary memory stream where the archive file is written.
             MemoryStream archiveStream = new(); 
             ZipArchive archive = new(archiveStream, ZipArchiveMode.Create);
             foreach((string, string) entry in filesList)
