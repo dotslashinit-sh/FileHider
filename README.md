@@ -20,6 +20,3 @@ The latest releases can be found [here](https://github.com/dotslashinit-sh/FileH
 
 ## License
 [MIT License](./LICENSE.md)
-
-## Requirements
-You might need .NET 6.0 runtime to run this. You can download it from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.2-windows-x64-installer). Works only on windows (or atleast, for now).
