@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hider"
         mc:Ignorable="d"
-        Title="File Hider" Height="600" Width="800"
-        >
+        Title="File Hider" Height="600" Width="800">
 
     <Grid Margin="10, 10, 10, 10">
         <Grid.RowDefinitions>
@@ -29,8 +28,7 @@
                      TextChanged="OnInputBoxTxtChngd"></TextBox>
             <Button x:Name="brwsInputFileBtn"
                     Grid.Column="2" Margin="2"
-                    Click="OnBrowseBtnClick"
-                    >Browse</Button>
+                    Click="OnBrowseBtnClick">Browse</Button>
         </Grid>
 
         <!--Buttons row-->
@@ -38,36 +36,29 @@
             <Button x:Name="addFilesBtn"
                     Width="80" Margin="2"
                     HorizontalAlignment="Left"
-                    Click="OnAddFilesBtnClick"
-                    >Add files</Button>
+                    Click="OnAddFilesBtnClick">Add files</Button>
             <Button x:Name="addFromDirBtn"
                     Width="100" Margin="86, 2, 2, 2"
                     HorizontalAlignment="Left"
-                    Click="OnAddFromDirBtnClick"
-                    >Add from Folder</Button>
+                    Click="OnAddDirBtnClick">Add Folder</Button>
             <Button x:Name="removeBtn"
                     Width="80" Margin="192, 2, 2, 2"
                     HorizontalAlignment="Left"
-                    Click="OnRemoveBtnClick"
-                    >Remove Item</Button>
+                    Click="OnRemoveBtnClick">Remove Item</Button>
             <Button x:Name="removeAllBtn"
                     Width="80" Margin="278, 2, 2, 2"
                     HorizontalAlignment="Left"
-                    Click="OnRemoveAllBtnClick"
-                    >Remove All</Button>
+                    Click="OnRemoveAllBtnClick">Remove All</Button>
 
             <Button x:Name="hFilesBtn"
                     Width="80" Margin="2"
                     HorizontalAlignment="Right"
-                    Click="OnHideFilesBtnClick"
-                    >Hide files!</Button>
+                    Click="OnHideFilesBtnClick">Hide files!</Button>
         </Grid>
 
         <!--File list row-->
         <Grid Grid.Row="2">
-            <ListBox x:Name="filesListBox"
-                     Margin="2"
-                     ></ListBox>
+            <ListBox x:Name="filesListBox" Margin="2"></ListBox>
         </Grid>
     </Grid>
 </Window>
