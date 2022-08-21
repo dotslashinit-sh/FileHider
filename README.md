@@ -16,13 +16,13 @@ A simple application to hide files inside JPG, MP3 and MP4 files.
 Open the output file with a zip archive application like WinRAR, WinZIP or 7-Zip and then extract the files.
 
 ## Downloads
-The latest releases can be found [here](https://github.com/dotslashinit-sh/FileHider/releases). Running these will require .NET 6.0 runtime which you can download from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.3-windows-x64-installer).
+The latest releases can be found [here](https://github.com/dotslashinit-sh/FileHider/releases). Running these will require .NET 6.0 runtime which you can download from [here](https://dotnet.microsoft.com/en-us/download/).
 
 ## Compiling
 You can build the project using any one of these following methods.
 
 ### Using .NET 6.0 SDK
-1) Download and install .NET 6.0 SDK from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.201-windows-x64-installer).
+1) Download and install .NET 6.0 SDK from [here](https://dotnet.microsoft.com/en-us/download/).
 2) Clone the repo and go to the root folder.
 3) Run `dotnet build`.
 
