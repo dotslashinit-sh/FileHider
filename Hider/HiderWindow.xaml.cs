@@ -38,7 +38,7 @@ namespace Hider
             dialog.Title = "Open file";
             dialog.CheckFileExists = true;
             dialog.CheckPathExists = true;
-            dialog.Filter = "All supported formats(*.mp3, *.mp4, *.jpg, *.png)|*.mp3;*.mp4;*.jpg,*.png";
+            dialog.Filter = "All supported formats(*.mp3, *.mp4, *.jpg, *.png)|*.mp3;*.mp4;*.jpg;*.png";
             dialog.ShowDialog();
             inputFileBox.Text = dialog.FileName;
         }
