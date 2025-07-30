@@ -1,6 +1,11 @@
 # Build files
 Hider/bin/*
 Hider/obj/*
+FileHider.Lib/bin/*
+FileHider.Lib/obj/*
+FileHider.Tests/bin/*
+FileHider.Tests/obj/*
+
 
 # User-options files
 *.user

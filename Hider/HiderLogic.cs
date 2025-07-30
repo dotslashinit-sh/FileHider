@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections;
+using System.IO;
 using System.IO.Compression;
-using System.Collections;
 
 namespace Hider
 {
@@ -31,13 +31,13 @@ namespace Hider
         public void AddDirectory(string path, string rootDir)
         {
             string[] files = Directory.GetFiles(path);
-            foreach(string file in files)
+            foreach (string file in files)
             {
                 filesList.Add((file, Path.GetRelativePath(rootDir, file)));
             }
 
             string[] directories = Directory.GetDirectories(path);
-            foreach(string dir in directories)
+            foreach (string dir in directories)
             {
                 this.AddDirectory(dir, rootDir);
             }
@@ -45,9 +45,9 @@ namespace Hider
 
         public void RemoveEntry(string entry)
         {
-            foreach((string, string) e in filesList)
+            foreach ((string, string) e in filesList)
             {
-                if(e.Item1 == entry)
+                if (e.Item1 == entry)
                 {
                     filesList.Remove(e);
                     break;

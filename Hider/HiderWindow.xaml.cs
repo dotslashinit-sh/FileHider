@@ -1,20 +1,22 @@
-﻿using System;
+﻿using FileHider.Lib;
+using System;
 using System.IO;
-using System.IO.Compression;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Threading.Tasks;
-using System.Collections;
+using System.Windows.Data;
 
 namespace Hider
 {
     public partial class HiderWindow : Window
     {
-        HiderSession session;
-
+        Session contextSession
+        {
+            get => (Session)this.DataContext;
+        }
         public HiderWindow()
         {
-            session = new();
+            this.DataContext = new Session();
         }
 
         /// <summary>
@@ -27,11 +29,6 @@ namespace Hider
             MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        private void OnInputBoxTxtChngd(object sender, TextChangedEventArgs e)
-        {
-            session.SetInputFile(inputFileBox.Text);
-        }
-
         private void OnBrowseBtnClick(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.OpenFileDialog dialog = new();
@@ -40,7 +37,7 @@ namespace Hider
             dialog.CheckPathExists = true;
             dialog.Filter = "All supported formats(*.mp3, *.mp4, *.jpg, *.png)|*.mp3;*.mp4;*.jpg;*.png";
             dialog.ShowDialog();
-            inputFileBox.Text = dialog.FileName;
+            contextSession.InputFile = dialog.FileName;
         }
 
         private void OnAddFilesBtnClick(object sender, RoutedEventArgs e)
@@ -48,14 +45,13 @@ namespace Hider
             System.Windows.Forms.OpenFileDialog dialog = new();
             dialog.Multiselect = true;
             dialog.CheckFileExists = true;
-            if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
             var files = dialog.FileNames;
             foreach (string? file in files)
             {
-                if (file != null && !filesListBox.Items.Contains(file))
+                if (file != null)
                 {
-                    filesListBox.Items.Add(file);
-                    session.AddFile(file, Path.GetFileName(file));
+                    contextSession.AddFile(file);
                 }
             }
         }
@@ -65,24 +61,21 @@ namespace Hider
             System.Windows.Forms.FolderBrowserDialog dialog = new();
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.Cancel) return;
             string dir = dialog.SelectedPath;
-            session.AddDirectory(dir, dir);
-            filesListBox.Items.Add(String.Format("{0}\\*", dir));
+            contextSession.AddDirectory(dir);
         }
 
         private void OnRemoveBtnClick(object sender, RoutedEventArgs e)
         {
-            object? selectedItem = filesListBox.SelectedItem;
-            if(selectedItem != null)
+            object? selectedItem = filesListView.SelectedItem;
+            if (selectedItem != null)
             {
-                session.RemoveEntry((string)selectedItem);
-                filesListBox.Items.Remove((string)selectedItem);
+                contextSession.Delete((IListItem)selectedItem);
             }
         }
 
         private void OnRemoveAllBtnClick(object sender, RoutedEventArgs e)
         {
-            filesListBox.Items.Clear();
-            session.RemoveAll();
+            contextSession.DeleteAll();
         }
 
         private async void OnHideFilesBtnClick(object sender, RoutedEventArgs e)
@@ -100,18 +93,18 @@ namespace Hider
             }
 
             // Check if atleast one item has been added to the list.
-            if (filesListBox.Items.Count == 0)
+            if (contextSession.Files.IsEmpty())
             {
                 ShowError("Please add atleast one item!");
                 return;
             }
 
-            string inputFile = session.GetInputFile();
-            string inputFileExt = session.GetInputFileExt();
+            string inputFile = contextSession.InputFile;
+            string inputFileExt = Path.GetExtension(contextSession.InputFile);
 
             // Get the file to be saved.
             System.Windows.Forms.SaveFileDialog dialog = new();
-            dialog.DefaultExt = session.GetInputFileExt();
+            dialog.DefaultExt = inputFileExt;
             dialog.Title = "Save location";
             dialog.OverwritePrompt = true;
             dialog.Filter = $"Input file type(*{inputFileExt})|{inputFileExt}";
@@ -130,14 +123,35 @@ namespace Hider
             {
                 File.Delete(outputFile);
             }
-            
-            session.SetOutputFile(outputFile);
-            await Task.Run(session.ProcessFiles);
+
+            contextSession.OutputFile = outputFile;
+            await Task.Run(contextSession.ProcessFiles);
 
             hFilesBtn.IsEnabled = true;
 
             MessageBox.Show("File saved success fully! Open the saved file with an archive manager like " +
                 "WinRAR or 7-Zip to view the files that were hidden!", "Confirmation", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void OnFilesListDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var current = filesListView.SelectedItem;
+            if (current == null || current is not DirectoryItem) return;
+            contextSession.Files.GoTo((DirectoryItem)current);
+        }
+
+        private void OnBackBtnClicked(object sender, RoutedEventArgs e)
+        {
+            var cd = contextSession.Files.CurrentDirectory;
+            if(cd.ParentDirectory != null)
+            {
+                contextSession.Files.GoTo(cd.ParentDirectory);
+            }
         }
     }
 }
