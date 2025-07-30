@@ -7,7 +7,7 @@
         [TestClass]
         public class FileListTests
         {
-            DirectoryItem rootDir = DirectoryItem.RootDir;
+            DirectoryItem rootDir;
             DirectoryItem dirInRoot;
             DirectoryItem dirInDir;
 

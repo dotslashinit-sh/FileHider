@@ -32,34 +32,40 @@
         </Grid>
 
         <!--Buttons row-->
-        <StackPanel Grid.Row="1" Margin="2" Orientation="Horizontal" >
-            
-            <Button x:Name="addFilesBtn"
-                    Width="80"
-                    Click="OnAddFilesBtnClick"
-                    Margin="5,0">Add files</Button>
-            <Button x:Name="addFromDirBtn"
-                    Width="80"
-                    Click="OnAddDirBtnClick"
-                    Margin="5,0">Add Folder</Button>
-            <Button x:Name="removeBtn"
-                    Width="80"
-                    Click="OnRemoveBtnClick"
-                    Margin="5,0">Remove Item</Button>
-            <Button x:Name="removeAllBtn"
-                    Width="80"
-                    Click="OnRemoveAllBtnClick"
-                    Margin="5,0">Remove All</Button>
-            <Button x:Name="BackBtn"
-                    Width="80"
-                    Click="OnBackBtnClicked"
-                    Margin="5,0">Back</Button>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Margin="2" Orientation="Horizontal" >
+                <Button x:Name="addFilesBtn"
+                        Width="80"
+                        Click="OnAddFilesBtnClick"
+                        Margin="2">Add files</Button>
+                <Button x:Name="addFromDirBtn"
+                        Width="80"
+                        Click="OnAddDirBtnClick"
+                        Margin="2">Add Folder</Button>
+                <Button x:Name="removeBtn"
+                        Width="80"
+                        Click="OnRemoveBtnClick"
+                        Margin="2">Remove Item</Button>
+                <Button x:Name="removeAllBtn"
+                        Width="80"
+                        Click="OnRemoveAllBtnClick"
+                        Margin="2">Remove All</Button>
+                <Button x:Name="BackBtn"
+                        Width="80"
+                        Click="OnBackBtnClicked"
+                        Margin="2">Back</Button>
+            </StackPanel>
             <Button x:Name="hFilesBtn"
                     Width="80"
                     Click="OnHideFilesBtnClick"
-                    HorizontalAlignment="Right"
-                    Margin="5,0">Hide files!</Button>
-        </StackPanel>
+                    Margin="2"
+                    Grid.Column="1"
+                    HorizontalAlignment="Right">Hide files!</Button>
+        </Grid>
 
         <!--Files list -->
 
