@@ -37,7 +37,8 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="100"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Margin="2" Orientation="Horizontal" >
+            <StackPanel Grid.Column="0"
+                        Orientation="Horizontal" >
                 <Button x:Name="addFilesBtn"
                         Width="80"
                         Click="OnAddFilesBtnClick"
@@ -52,8 +53,8 @@
                         Margin="2">Remove Item</Button>
                 <Button x:Name="removeAllBtn"
                         Width="80"
-                        Click="OnRemoveAllBtnClick"
-                        Margin="2">Remove All</Button>
+                        Margin="2"
+                        Click="OnRemoveAllBtnClick">Remove All</Button>
                 <Button x:Name="BackBtn"
                         Width="80"
                         Click="OnBackBtnClicked"
