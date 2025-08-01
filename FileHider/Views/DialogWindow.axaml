@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="using:FileHider.Views"
+		xmlns:vm="using:FileHider.ViewModels"
+        mc:Ignorable="d"
+        x:Class="FileHider.Views.DialogWindow"
+		x:DataType="vm:DialogViewModel"
+		CanResize="False"
+		SizeToContent="WidthAndHeight"
+		Title="{Binding Title}"
+		Icon="/Assets/avalonia-logo.ico"
+		WindowStartupLocation="CenterScreen">
+
+	<Design.DataContext>
+		<vm:DialogViewModel/>
+	</Design.DataContext>
+	
+	<StackPanel Margin="10">
+		<TextBlock Text="{Binding Message}"
+				   TextWrapping="Wrap"
+				   VerticalAlignment="Center"
+				   HorizontalAlignment="Center"/>
+		<Button Margin="10"
+				Command="{Binding OkCommand}"
+				HorizontalAlignment="Center">Ok</Button>
+	</StackPanel>
+</Window>

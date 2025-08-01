@@ -1,23 +1,23 @@
 ﻿namespace FileHider.Tests
 {
-    using FileHider.Lib;
+    using FileHider.Lib.FilesList;
     [TestClass]
     public sealed class FileHiderLibTests
     {
         [TestClass]
         public class FileListTests
         {
-            DirectoryItem rootDir;
-            DirectoryItem dirInRoot;
-            DirectoryItem dirInDir;
+            DirectoryNode rootDir;
+            DirectoryNode dirInRoot;
+            DirectoryNode dirInDir;
 
             public FileListTests()
             {
-                rootDir = DirectoryItem.RootDir;
-                dirInRoot = DirectoryItem.Create("dir", rootDir);
-                dirInDir = DirectoryItem.Create("dir2", dirInRoot);
+                rootDir = DirectoryNode.RootDir;
+                dirInRoot = DirectoryNode.Create("dir", rootDir);
+                dirInDir = DirectoryNode.Create("dir2", dirInRoot);
 
-                var f = FileItem.Create("FileHider.sln", dirInDir);
+                var f = FileNode.Create("FileHider.sln", dirInDir);
             }
 
             [TestMethod]
@@ -60,7 +60,7 @@
             //public void DirectoryClearTest()
             //{
             //    dirInDir.Delete();
-            //    Assert.IsTrue(dirInDir.Children.Count == 0);
+            //    Assert.IsTrue(dirInDir.Children.FileCount == 0);
             //}
 
             void TestPath(string path1, string path2)

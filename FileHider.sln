@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileHider.Lib", "FileHider.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileHider.Tests", "FileHider.Tests\FileHider.Tests.csproj", "{5E30DDB9-B5ED-45A8-A65B-6D75941AB14A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileHider", "FileHider\FileHider.csproj", "{5D340DB4-C1D9-9CFA-9FC1-B783A419E2A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileHider.Desktop", "FileHider.Desktop\FileHider.Desktop.csproj", "{450A58F8-00AD-C2AD-8D93-631E62932191}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{5E30DDB9-B5ED-45A8-A65B-6D75941AB14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E30DDB9-B5ED-45A8-A65B-6D75941AB14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E30DDB9-B5ED-45A8-A65B-6D75941AB14A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D340DB4-C1D9-9CFA-9FC1-B783A419E2A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D340DB4-C1D9-9CFA-9FC1-B783A419E2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D340DB4-C1D9-9CFA-9FC1-B783A419E2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D340DB4-C1D9-9CFA-9FC1-B783A419E2A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{450A58F8-00AD-C2AD-8D93-631E62932191}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{450A58F8-00AD-C2AD-8D93-631E62932191}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{450A58F8-00AD-C2AD-8D93-631E62932191}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{450A58F8-00AD-C2AD-8D93-631E62932191}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
