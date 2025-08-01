@@ -151,7 +151,9 @@ public partial class MainViewModel : ObservableObject
 
         string inputFileExt = Path.GetExtension(InputFile);
         var options = new FilePickerSaveOptions();
-        options.DefaultExtension = inputFileExt.Substring(1);
+        var inputFileType = new FilePickerFileType("Input file type");
+        inputFileType.Patterns =[ $"*{inputFileExt}"];
+        options.FileTypeChoices = [inputFileType];
         options.Title = "Select a location for the output file";
         if (StorageProvider == null)
         {
