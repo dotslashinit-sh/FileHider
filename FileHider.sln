@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hider", "Hider\Hider.csproj", "{633103B0-A2A8-4754-9168-73C6EB7B4C50}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileHider.Lib", "FileHider.Lib\FileHider.Lib.csproj", "{D947EC9B-84C7-48C8-8D2D-4FE2564EFAA9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileHider.Tests", "FileHider.Tests\FileHider.Tests.csproj", "{5E30DDB9-B5ED-45A8-A65B-6D75941AB14A}"
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{633103B0-A2A8-4754-9168-73C6EB7B4C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{633103B0-A2A8-4754-9168-73C6EB7B4C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{633103B0-A2A8-4754-9168-73C6EB7B4C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{633103B0-A2A8-4754-9168-73C6EB7B4C50}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D947EC9B-84C7-48C8-8D2D-4FE2564EFAA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D947EC9B-84C7-48C8-8D2D-4FE2564EFAA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D947EC9B-84C7-48C8-8D2D-4FE2564EFAA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
