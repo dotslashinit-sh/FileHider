@@ -5,7 +5,9 @@
              xmlns:vm="clr-namespace:FileHider.ViewModels"
              mc:Ignorable="d"
              x:Class="FileHider.Views.MainView"
-             x:DataType="vm:MainViewModel">
+             x:DataType="vm:MainViewModel"
+			 Design.Width="800"
+			 Design.Height="500">
 	<Design.DataContext>
 		<vm:MainViewModel />
 	</Design.DataContext>
@@ -27,23 +29,28 @@
 			<TextBox Grid.Column="1" Height="24" Text="{Binding InputFile, Mode=TwoWay}"></TextBox>
 			<Button Grid.Column="2" Margin="5, 0, 0, 0" Command="{Binding BrowseInputFileCommand}" HorizontalAlignment="Right">Browse</Button>
 		</Grid>
-		<StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0, 5">
-			<Button Command="{Binding AddFilesCommand}"
-					Margin="5, 0">Add files</Button>
-			<Button Command="{Binding AddDirCommand}"
-					Margin="5, 0">Add folder</Button>
-			<Button Command="{Binding RemoveCommand}"
-					Margin="5, 0">Remove</Button>
-			<Button Command="{Binding RemoveAllCommand}"
-					Margin="5, 0">Remove All</Button>
-			<Button Command="{Binding BackCommand}"
-					HorizontalAlignment="Right"
-					Margin="5, 0">Back</Button>
-			<Button Name="HideFilesBtn"
-					Command="{Binding HideFilesCommand}"
-					HorizontalAlignment="Right"
-					Margin="5, 0">Hide Files</Button>
-		</StackPanel>
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<StackPanel Grid.Column="0" Orientation="Horizontal" Margin="0, 5">
+				<Button Command="{Binding AddFilesCommand}"
+						Margin="5, 0">Add files</Button>
+				<Button Command="{Binding AddDirCommand}"
+						Margin="5, 0">Add folder</Button>
+				<Button Command="{Binding RemoveCommand}"
+						Margin="5, 0">Remove</Button>
+				<Button Command="{Binding RemoveAllCommand}"
+						Margin="5, 0">Remove All</Button>
+				<Button Command="{Binding BackCommand}"
+						Margin="5, 0">Back</Button>
+			</StackPanel>
+			<StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+				<Button Command="{Binding HideFilesCommand}"
+						Margin="5, 0">Hide Files</Button>
+			</StackPanel>
+		</Grid>
 
 		<ProgressBar Grid.Row="2"
 					 Margin="5"
