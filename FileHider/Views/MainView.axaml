@@ -28,15 +28,21 @@
 			<Button Grid.Column="2" Margin="5, 0, 0, 0" Command="{Binding BrowseInputFileCommand}" HorizontalAlignment="Right">Browse</Button>
 		</Grid>
 		<StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0, 5">
-			<Button Command="{Binding AddFilesCommand}">Add files</Button>
-			<Button Command="{Binding AddDirCommand}">Add folder</Button>
-			<Button Command="{Binding RemoveCommand}">Remove</Button>
-			<Button Command="{Binding RemoveAllCommand}">Remove All</Button>
+			<Button Command="{Binding AddFilesCommand}"
+					Margin="5, 0">Add files</Button>
+			<Button Command="{Binding AddDirCommand}"
+					Margin="5, 0">Add folder</Button>
+			<Button Command="{Binding RemoveCommand}"
+					Margin="5, 0">Remove</Button>
+			<Button Command="{Binding RemoveAllCommand}"
+					Margin="5, 0">Remove All</Button>
 			<Button Command="{Binding BackCommand}"
-					HorizontalAlignment="Right">Back</Button>
+					HorizontalAlignment="Right"
+					Margin="5, 0">Back</Button>
 			<Button Name="HideFilesBtn"
 					Command="{Binding HideFilesCommand}"
-					HorizontalAlignment="Right">Hide Files</Button>
+					HorizontalAlignment="Right"
+					Margin="5, 0">Hide Files</Button>
 		</StackPanel>
 
 		<ProgressBar Grid.Row="2"
