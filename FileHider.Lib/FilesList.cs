@@ -20,6 +20,7 @@ public class FilesList : INotifyPropertyChanged
     }
 
     public DirectoryNode RootDirectory { get; }
+    private int itemsProcessed = 0;
 
     private int _fileCount;
     /// <summary>
@@ -142,19 +143,25 @@ public class FilesList : INotifyPropertyChanged
     /// </summary>
     public void AddItemsToArchive(DirectoryNode directory, ZipArchive archive, IProgress<float> progress)
     {
-        int itemsDone = 0;
-        foreach(var item in directory.Children)
+        itemsProcessed = 0;
+        _AddItemsToArchive(directory, archive, progress);
+    }
+
+    private void _AddItemsToArchive(DirectoryNode directory, ZipArchive archive, IProgress<float> progress)
+    {
+        foreach (var item in directory.Children)
         {
             if (item == null) continue;
-            else if(item is DirectoryNode)
+            else if (item is DirectoryNode)
             {
-                AddItemsToArchive((DirectoryNode)item, archive, progress);
-            } else
+                _AddItemsToArchive((DirectoryNode)item, archive, progress);
+            }
+            else
             {
                 var fileItem = (FileNode)item;
                 archive.CreateEntryFromFile(fileItem.RealPath, fileItem.GetVirtualPath());
-                itemsDone += 1;
-                progress.Report((float)itemsDone * 100.0f / FileCount);
+                itemsProcessed += 1;
+                progress.Report((float)itemsProcessed * 100.0f / FileCount);
             }
         }
     }
@@ -165,10 +172,6 @@ public class FilesList : INotifyPropertyChanged
     /// <returns>Whether the root directory is empty or not.</returns>
     public bool IsEmpty()
     {
-        var cd = CurrentDirectory;
-        GoToRoot();
-        var c = CurrentDirectory.Children.Count;
-        GoTo(cd);
-        return c == 0;
+        return RootDirectory.Children.Count == 0;
     }
 }
