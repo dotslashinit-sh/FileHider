@@ -141,25 +141,25 @@ public class FilesList : INotifyPropertyChanged
     /// <summary>
     /// Adds all the files to the archive.
     /// </summary>
-    public void AddItemsToArchive(DirectoryNode directory, ZipArchive archive, IProgress<float> progress)
+    public void AddItemsToArchive(ArchiveOptions options, DirectoryNode directory, ZipArchive archive, IProgress<float> progress)
     {
         itemsProcessed = 0;
-        _AddItemsToArchive(directory, archive, progress);
+        _AddItemsToArchive(options, directory, archive, progress);
     }
 
-    private void _AddItemsToArchive(DirectoryNode directory, ZipArchive archive, IProgress<float> progress)
+    private void _AddItemsToArchive(ArchiveOptions options, DirectoryNode directory, ZipArchive archive, IProgress<float> progress)
     {
         foreach (var item in directory.Children)
         {
             if (item == null) continue;
             else if (item is DirectoryNode)
             {
-                _AddItemsToArchive((DirectoryNode)item, archive, progress);
+                _AddItemsToArchive(options, (DirectoryNode)item, archive, progress);
             }
             else
             {
                 var fileItem = (FileNode)item;
-                archive.CreateEntryFromFile(fileItem.RealPath, fileItem.GetVirtualPath());
+                archive.CreateEntryFromFile(fileItem.RealPath, fileItem.GetVirtualPath(), options.CompressionLevel);
                 itemsProcessed += 1;
                 progress.Report((float)itemsProcessed * 100.0f / FileCount);
             }

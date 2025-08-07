@@ -11,9 +11,13 @@ using System.Threading.Tasks;
 using System;
 using CommunityToolkit.Mvvm.Input;
 using FileHider.Services;
+using FileHider.Lib;
+using System.Linq;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace FileHider.ViewModels;
 
+using IOCompression = System.IO.Compression;
 
 public partial class MainViewModel : ObservableObject
 {
@@ -26,6 +30,7 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     public FilesList files;
 
+
     public IStorageProvider? StorageProvider { get; set; }
 
     [ObservableProperty]
@@ -36,6 +41,29 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty]
     private float percentDone;
+    [ObservableProperty]
+    private ArchiveOptions options;
+    
+    private string[] compressionLevels;
+    public string[] CompressionLevels { get => compressionLevels; }
+
+    private string selectedCompressionLevel;
+    public string SelectedCompressionLevel
+    {
+        get => selectedCompressionLevel;
+        set
+        {
+            selectedCompressionLevel = value;
+            Options.CompressionLevel = selectedCompressionLevel switch
+            {
+                "No Compression" => IOCompression.CompressionLevel.NoCompression,
+                "Fastest" => IOCompression.CompressionLevel.Fastest,
+                "Optimal" => IOCompression.CompressionLevel.Optimal,
+                "High Compression" => IOCompression.CompressionLevel.SmallestSize,
+                _ => throw new Exception(message: $"Invalid value for {nameof(SelectedCompressionLevel)} '{value}'")
+            };
+        }
+    }
 
     public MainViewModel()
     {
@@ -46,6 +74,10 @@ public partial class MainViewModel : ObservableObject
         percentDone = new();
         SelectedItem = null;
         StorageProvider = null;
+        options = new();
+        compressionLevels = ["No Compression", "Fastest", "Optimal", "High Compression"];
+        selectedCompressionLevel = "Optimal";
+        Options.CompressionLevel = IOCompression.CompressionLevel.Optimal;
     }
 
     [RelayCommand]
@@ -222,7 +254,7 @@ public partial class MainViewModel : ObservableObject
         outfile.Write(buffer);
         using (ZipArchive archive = new(outfile, ZipArchiveMode.Create))
         {
-            Files.AddItemsToArchive(Files.RootDirectory, archive, progress);
+            Files.AddItemsToArchive(Options, Files.RootDirectory, archive, progress);
         }
         outfile.Close();
     }

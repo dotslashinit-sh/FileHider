@@ -56,13 +56,6 @@
                 Assert.IsTrue(dirInDir.Children.Count == 1);
             }
 
-            //[TestMethod]
-            //public void DirectoryClearTest()
-            //{
-            //    dirInDir.Delete();
-            //    Assert.IsTrue(dirInDir.Children.FileCount == 0);
-            //}
-
             void TestPath(string path1, string path2)
             {
                 if (System.OperatingSystem.IsWindows())
